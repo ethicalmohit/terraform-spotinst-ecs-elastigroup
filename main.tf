@@ -74,6 +74,29 @@ resource "spotinst_elastigroup_aws" "default-elastigroup" {
     cooldown           = 300
   }
 
+  integration_ecs = { 
+    cluster_name         = "ecs-cluster"
+    autoscale_is_enabled = false
+    autoscale_cooldown   = 300
+    autoscale_scale_down_non_service_tasks = false
+
+    autoscale_headroom = {
+      cpu_per_unit    = 1024
+      memory_per_unit = 512
+      num_of_units    = 2
+    }
+
+    autoscale_down = {
+      evaluation_periods        = 300
+      max_scale_down_percentage = 70
+    }
+
+    autoscale_attributes = [{
+      key   = "test.ecs.key"
+      value = "test.ecs.value"
+    }]
+  }
+  
   tags = [
   {
      key   = "Env"
