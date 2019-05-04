@@ -1,5 +1,5 @@
 resource "aws_iam_role" "external" {
-  name = "spotinst-role"
+  name = "Spotinst-Role"
 
   assume_role_policy = <<EOF
 {
@@ -13,7 +13,7 @@ resource "aws_iam_role" "external" {
       "Action": "sts:AssumeRole",
       "Condition": {
         "StringEquals": {
-          "sts:ExternalId": "spotinst:aws:extid:3w72ms42i8000000"
+          "sts:ExternalId": "spotinst:aws:extid:fq2zib3nj4000000"
         }
       }
     }
@@ -27,7 +27,7 @@ data "template_file" "external" {
 }
 
 resource "aws_iam_policy" "ecs" {
-  name        = "spotinst_ecs_policy"
+  name        = "Spotinst-Policy"
   description = "A test policy"
   policy = "${data.template_file.external.rendered}"
 }
