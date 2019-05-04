@@ -29,7 +29,7 @@ data "template_file" "external" {
 resource "aws_iam_policy" "ecs" {
   name        = "Spotinst-Policy"
   description = "A test policy"
-  policy = "${data.template_file.external.rendered}"
+  policy      = "${data.template_file.external.rendered}"
 }
 
 resource "aws_iam_role_policy_attachment" "ecs-attach" {
