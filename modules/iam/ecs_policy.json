@@ -52,7 +52,11 @@
                 "ec2:CancelReservedInstancesListing",
                 "ec2:ConfirmProductInstance",
                 "ecs:ListClusters",
-                "ecs:ListServices"
+                "ecs:ListServices",
+                "ecs:ListContainerInstances",
+                "ecs:DescribeContainerInstances",
+                "ecs:*",
+                "batch:DescribeJobQueues"
             ],
             "Resource": "*"
         }
