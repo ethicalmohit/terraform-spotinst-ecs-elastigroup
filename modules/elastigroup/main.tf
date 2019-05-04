@@ -4,9 +4,9 @@ resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
   description = "created by Terraform"
   product     = "Linux/UNIX"
 
-  max_size         = 2
+  max_size         = 0
   min_size         = 0
-  desired_capacity = 1
+  desired_capacity = 0
   capacity_unit    = "instance"
 
   region   = "us-east-1"
