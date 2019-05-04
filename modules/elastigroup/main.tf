@@ -4,43 +4,50 @@ resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
   description = "created by Terraform"
   product     = "Linux/UNIX"
 
-  max_size         = 0
-  min_size         = 0
-  desired_capacity = 0
+  max_size         = 2
+  min_size         = 1
+  desired_capacity = 1
   capacity_unit    = "weight"
 
-  region     = "us-east-1"
-  subnet_ids = ["sb-123456", "sb-456789"]
+  region   = "us-east-1"
+  image_id = "ami-0be9e1908fe51a590"
 
-  image_id             = "ami-a27d8fda"
-  iam_instance_profile = "iam-profile"
-  key_name             = "my-key.ssh"
-  security_groups      = ["sg-123456"]
-  user_data            = "echo hello world"
-  enable_monitoring    = false
-  ebs_optimized        = false
-  placement_tenancy    = "default"
+  #iam_instance_profile = "iam-profile"
+  #key_name             = "my-key.ssh"
+  security_groups = ["sg-3330774f"]
+  spot_percentage = 100
 
-  instance_types_ondemand       = "m3.2xlarge"
-  instance_types_spot           = ["m3.xlarge", "m3.2xlarge"]
-  instance_types_preferred_spot = ["m3.xlarge"]
+  user_data         = "IyEvYmluL2Jhc2gKZWNobyBFQ1NfQ0xVU1RFUj10ZXN0aW5nLWNsdXN0ZXIgPj4gL2V0Yy9lY3MvZWNzLmNvbmZpZztlY2hvIEVDU19CQUNLRU5EX0hPU1Q9ID4+IC9ldGMvZWNzL2Vjcy5jb25maWc7"
+  enable_monitoring = true
+  ebs_optimized     = false
+  placement_tenancy = "default"
 
-  instance_types_weights = [
-    {
-      instance_type = "c3.large"
-      weight        = 10
-    },
-    {
-      instance_type = "c4.xlarge"
-      weight        = 16
-    },
-  ]
+  instance_types_ondemand       = "t2.micro"
+  instance_types_spot           = ["t2.xlarge", "m3.2xlarge"]
+  instance_types_preferred_spot = ["t2.micro"]
+
+  instance_types_ondemand = "t2.micro"
+
+  instance_types_spot = ["t2.micro", "t3.micro", "t3a.micro"]
+
+  subnet_ids = ["subnet-0daefb56", "subnet-1759c972", "subnet-1196c83c", "subnet-ba8b84f3", "subnet-c470c8c8", "subnet-5921b665"]
+
+  # instance_types_weights = [
+  #   {
+  #     instance_type = "t2.micro"
+  #     weight        = 10
+  #   },
+  #   {
+  #     instance_type = "t3.micro"
+  #     weight        = 16
+  #   },
+  # ]
 
   orientation          = "balanced"
-  fallback_to_ondemand = false
+  fallback_to_ondemand = true
   cpu_credits          = "unlimited"
 
-  wait_for_capacity         = 5
+  wait_for_capacity         = 0
   wait_for_capacity_timeout = 300
 
   scaling_strategy = {
@@ -48,69 +55,51 @@ resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
     termination_policy               = "default"
   }
 
-  # scaling_up_policy = {
-  #   policy_name        = "Default Scaling Up Policy"
-  #   metric_name        = "DefaultQueuesDepth"
-  #   statistic          = "average"
-  #   unit               = "none"
-  #   adjustment         = 1
-  #   namespace          = "custom"
-  #   threshold          = 100
-  #   period             = 60
-  #   evaluation_periods = 5
-  #   cooldown           = 300
-  # }
+  "health_check_type" = "ECS_CLUSTER_INSTANCE"
 
+  "health_check_grace_period" = 300
 
-  # scaling_down_policy = {
-  #   policy_name        = "Default Scaling Down Policy"
-  #   metric_name        = "DefaultQueuesDepth"
-  #   statistic          = "average"
-  #   unit               = "none"
-  #   adjustment         = 1
-  #   namespace          = "custom"
-  #   threshold          = 10
-  #   period             = 60
-  #   evaluation_periods = 10
-  #   cooldown           = 300
-  # }
+  "health_check_unhealthy_duration_before_replacement" = 120
 
   integration_ecs = {
-    cluster_name                           = "ecs-cluster"
-    autoscale_is_enabled                   = false
-    autoscale_cooldown                     = 300
-    autoscale_scale_down_non_service_tasks = false
+    cluster_name         = "testing-cluster"
+    autoscale_is_enabled = true
 
-    autoscale_headroom = {
-      cpu_per_unit    = 1024
-      memory_per_unit = 512
-      num_of_units    = 2
-    }
+    # autoscale_cooldown                     = 300
+    # autoscale_scale_down_non_service_tasks = false
 
-    autoscale_down = {
-      evaluation_periods        = 300
-      max_scale_down_percentage = 70
-    }
+    # autoscale_headroom = {
+    #   cpu_per_unit    = 1024
+    #   memory_per_unit = 512
+    #   num_of_units    = 2
+    # }
 
-    autoscale_attributes = [{
-      key   = "test.ecs.key"
-      value = "test.ecs.value"
-    }]
+    # autoscale_down = {
+    #   evaluation_periods        = 300
+    #   max_scale_down_percentage = 70
+    # }
+
+    # autoscale_attributes = [{
+    #   key   = "test.ecs.key"
+    #   value = "test.ecs.value"
+    # }]
   }
+
   tags = [
     {
       key   = "Env"
-      value = "production"
+      value = "TESTING"
     },
     {
       key   = "Name"
-      value = "default-production"
+      value = "default-testing"
     },
     {
       key   = "Project"
-      value = "app_v2"
+      value = "Testing"
     },
   ]
+
   lifecycle {
     ignore_changes = [
       "desired_capacity",
