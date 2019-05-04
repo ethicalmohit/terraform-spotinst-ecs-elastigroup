@@ -1,5 +1,5 @@
 # Create an Elastigroup
-resource "spotinst_elastigroup_aws" "default-elastigroup" {
+resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
 
   name        = "default-elastigroup"
   description = "created by Terraform"
@@ -114,7 +114,7 @@ resource "spotinst_elastigroup_aws" "default-elastigroup" {
 
   lifecycle {
     ignore_changes = [
-      "desired_capacity",
+      "desired_capacity"
     ]
   }
 }
