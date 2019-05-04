@@ -50,7 +50,9 @@
                 "iam:CreateServiceLinkedRole",
                 "iam:ListAccountAliases",
                 "ec2:CancelReservedInstancesListing",
-                "ec2:ConfirmProductInstance"
+                "ec2:ConfirmProductInstance",
+                "ecs:ListClusters",
+                "ecs:ListServices"
             ],
             "Resource": "*"
         }
