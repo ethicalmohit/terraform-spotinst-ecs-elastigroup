@@ -5,9 +5,9 @@ resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
   product     = "Linux/UNIX"
 
   max_size         = 2
-  min_size         = 1
+  min_size         = 0
   desired_capacity = 1
-  capacity_unit    = "weight"
+  capacity_unit    = "instance"
 
   region   = "us-east-1"
   image_id = "ami-0be9e1908fe51a590"
@@ -23,12 +23,10 @@ resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
   placement_tenancy = "default"
 
   instance_types_ondemand       = "t2.micro"
-  instance_types_spot           = ["t2.xlarge", "m3.2xlarge"]
+  "instance_types_spot" = ["t2.micro", "t3.micro", "t3a.micro"]
   instance_types_preferred_spot = ["t2.micro"]
 
   instance_types_ondemand = "t2.micro"
-
-  instance_types_spot = ["t2.micro", "t3.micro", "t3a.micro"]
 
   subnet_ids = ["subnet-0daefb56", "subnet-1759c972", "subnet-1196c83c", "subnet-ba8b84f3", "subnet-c470c8c8", "subnet-5921b665"]
 
@@ -84,6 +82,8 @@ resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
     #   value = "test.ecs.value"
     # }]
   }
+
+   "region" = "us-east-1"
 
   tags = [
     {
