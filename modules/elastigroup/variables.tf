@@ -10,7 +10,7 @@ variable "spotinst_account" {
 
 variable "ecs_cluster_name" {
   description = "describe your variable"
-  default     = "default value"
+  default     = "testing"
 }
 
 variable "fallback_to_ondemand" {
