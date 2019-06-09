@@ -29,6 +29,9 @@ module "iam-role" {
 |------|-------------|:----:|:-----:|:-----:|
 | ecs_cluster_name | ECS cluster name | string | `testing` | yes |
 | region | Region name | string | `us-east-1` | yes |
+| min_capacity | Region name | string | 0 | yes |
+| max_capacity | Region name | string | 5 | yes |
+| desired_capacity | Region name | number | 1 | yes |
 | instance_types_ondemand | AMI ID | string | `t2.micro` | yes |
 | instance_types_preferred_spot | AMI ID | list | `t2.micro` | yes |
 | instance_types_spot | AMI ID | list | `t2.micro,t3.micro` | yes |

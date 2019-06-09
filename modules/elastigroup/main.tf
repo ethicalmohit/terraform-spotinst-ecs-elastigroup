@@ -5,16 +5,18 @@ data "template_file" "user_data" {
     ecs_cluster = "${var.ecs_cluster_name}"
   }
 }
+
 # Create an Elastigroup
 resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
   name        = "${var.elastigroup_name}"
   description = "created by Terraform"
   product     = "Linux/UNIX"
 
-  max_size         = 2
-  min_size         = 0
-  desired_capacity = 1
-  capacity_unit    = "instance"
+  min_size         = "${var.min_capacity}"
+  desired_capacity = "${var.desired_capacity}"
+  max_size         = "${var.max_capacity}"
+
+  capacity_unit = "instance"
 
   region   = "${var.region}"
   image_id = "${var.ami_id}"
@@ -22,16 +24,15 @@ resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
   #iam_instance_profile = "iam-profile"
   #key_name             = "my-key.ssh"
 
-  security_groups = ["sg-3330774f"]
-  spot_percentage = 100
-  user_data         = "${data.template_file.user_data.rendered}"
-  enable_monitoring = true
-  ebs_optimized     = false
+  security_groups               = ["sg-3330774f"]
+  spot_percentage               = 100
+  user_data                     = "${data.template_file.user_data.rendered}"
+  enable_monitoring             = true
+  ebs_optimized                 = false
   instance_types_ondemand       = "${var.instance_types_ondemand}"
   instance_types_spot           = "${var.instance_types_spot}"
   instance_types_preferred_spot = "${var.instance_types_preferred_spot}"
-
-  subnet_ids = ["subnet-0daefb56", "subnet-1759c972", "subnet-1196c83c", "subnet-ba8b84f3", "subnet-c470c8c8", "subnet-5921b665"]
+  subnet_ids                    = ["subnet-0daefb56", "subnet-1759c972", "subnet-1196c83c", "subnet-ba8b84f3", "subnet-c470c8c8", "subnet-5921b665"]
   # Valid values: "balanced", "costOriented", "equalAzDistribution", "availabilityOriented".
   orientation = "balanced"
   # Parameter to spawn on-demand instance, incase spot is not available.
@@ -104,7 +105,7 @@ resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
   ]
   lifecycle {
     ignore_changes = [
-      "desired_capacity"
+      "desired_capacity",
     ]
   }
 }

@@ -9,15 +9,17 @@ variable "ecs_cluster_name" {
 
 variable "fallback_to_ondemand" {
   description = "If spot instances are not available then use on-demand instances. (default=true)"
-  default = "true"
+  default     = "true"
 }
 
 variable "instance_types_ondemand" {
   default = "t2.micro"
 }
+
 variable "instance_types_spot" {
   default = ["t2.micro", "t3.micro", "t3a.micro"]
 }
+
 variable "instance_types_preferred_spot" {
   default = ["t2.micro"]
 }
@@ -44,4 +46,16 @@ variable "region" {
 
 variable "ami_id" {
   default = "ami-0ff8a91507f77f867"
+}
+
+variable "min_capacity" {
+  default = 0
+}
+
+variable "max_capacity" {
+  default = 5
+}
+
+variable "desired_capacity" {
+  default = 1
 }
