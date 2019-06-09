@@ -1,6 +1,6 @@
 # Create an Elastigroup
 resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
-  name        = "default-elastigroup"
+  name        = "${var.elastigroup_name}"
   description = "created by Terraform"
   product     = "Linux/UNIX"
 
@@ -9,7 +9,7 @@ resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
   desired_capacity = 2
   capacity_unit    = "instance"
 
-  region   = "us-east-1"
+  region   = "${var.region}"
   image_id = "ami-0be9e1908fe51a590"
 
   #iam_instance_profile = "iam-profile"
@@ -20,21 +20,21 @@ resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
   user_data         = "IyEvYmluL2Jhc2gKZWNobyBFQ1NfQ0xVU1RFUj10ZXN0aW5nLWNsdXN0ZXIgPj4gL2V0Yy9lY3MvZWNzLmNvbmZpZztlY2hvIEVDU19CQUNLRU5EX0hPU1Q9ID4+IC9ldGMvZWNzL2Vjcy5jb25maWc7"
   enable_monitoring = true
   ebs_optimized     = false
-  instance_types_ondemand       = "t2.micro"
-  instance_types_spot           = ["t2.micro", "t3.micro", "t3a.micro"]
-  instance_types_preferred_spot = ["t2.micro"]
-  instance_types_ondemand = "t2.micro"
+  instance_types_ondemand       = "${var.instance_types_ondemand}"
+  instance_types_spot           = "${var.instance_types_spot}"
+  instance_types_preferred_spot = "${var.instance_types_preferred_spot}"
+
   subnet_ids = ["subnet-0daefb56", "subnet-1759c972", "subnet-1196c83c", "subnet-ba8b84f3", "subnet-c470c8c8", "subnet-5921b665"]
   # Valid values: "balanced", "costOriented", "equalAzDistribution", "availabilityOriented".
   orientation = "balanced"
   # Parameter to spawn on-demand instance, incase spot is not available.
-  fallback_to_ondemand = true
+  fallback_to_ondemand = "${var.fallback_to_ondemand}"
   # Parameter for t3 type instances
   cpu_credits = "unlimited"
   #Minimum number of instances in a 'HEALTHY' status that is required before continuing. 
-  wait_for_capacity = 0
+  wait_for_capacity = "${var.wait_for_capacity}"
   # Time (seconds) to wait for instances to report a 'HEALTHY' status.
-  wait_for_capacity_timeout = 300
+  wait_for_capacity_timeout = "${var.wait_for_capacity_timeout}"
 
   # scaling_strategy = {
   #   terminate_at_end_of_billing_hour = true
@@ -55,7 +55,7 @@ resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
   ########################
 
   integration_ecs = {
-    cluster_name         = "testing-cluster"
+    cluster_name         = "${var.ecs_cluster_name}"
     autoscale_is_enabled = true
 
     ######################
@@ -97,7 +97,7 @@ resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
   ]
   lifecycle {
     ignore_changes = [
-      "desired_capacity",
+      "desired_capacity"
     ]
   }
 }
