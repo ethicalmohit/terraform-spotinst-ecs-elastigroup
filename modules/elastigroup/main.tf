@@ -1,3 +1,10 @@
+data "template_file" "user_data" {
+  template = "${file("${path.module}/user-data.sh")}"
+
+  vars {
+    ecs_cluster = "${var.ecs_cluster_name}"
+  }
+}
 # Create an Elastigroup
 resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
   name        = "${var.elastigroup_name}"
@@ -10,14 +17,14 @@ resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
   capacity_unit    = "instance"
 
   region   = "${var.region}"
-  image_id = "ami-0be9e1908fe51a590"
+  image_id = "${var.ami_id}"
 
   #iam_instance_profile = "iam-profile"
   #key_name             = "my-key.ssh"
 
   security_groups = ["sg-3330774f"]
   spot_percentage = 100
-  user_data         = "IyEvYmluL2Jhc2gKZWNobyBFQ1NfQ0xVU1RFUj10ZXN0aW5nLWNsdXN0ZXIgPj4gL2V0Yy9lY3MvZWNzLmNvbmZpZztlY2hvIEVDU19CQUNLRU5EX0hPU1Q9ID4+IC9ldGMvZWNzL2Vjcy5jb25maWc7"
+  user_data         = "${data.template_file.user_data.rendered}"
   enable_monitoring = true
   ebs_optimized     = false
   instance_types_ondemand       = "${var.instance_types_ondemand}"
