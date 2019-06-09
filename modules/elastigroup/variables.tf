@@ -1,16 +1,10 @@
-variable "spotinst_token" {
-  description = "describe your variable"
-  default     = "default value"
-}
+variable "spotinst_token" {}
 
-variable "spotinst_account" {
-  description = "describe your variable"
-  default     = "default value"
-}
+variable "spotinst_account" {}
 
 variable "ecs_cluster_name" {
   description = "describe your variable"
-  default     = "testing"
+  default     = "example"
 }
 
 variable "fallback_to_ondemand" {
@@ -49,5 +43,5 @@ variable "region" {
 }
 
 variable "ami_id" {
-  default = "ami-0be9e1908fe51a590"
+  default = "ami-0ff8a91507f77f867"
 }
