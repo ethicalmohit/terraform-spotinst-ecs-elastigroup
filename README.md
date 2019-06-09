@@ -22,3 +22,9 @@ module "iam-role" {
   source = "./modules/iam"
 }
 ```
+
+## 
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| create\_alb | Controls if the ALB should be created | string | `true` | no |
