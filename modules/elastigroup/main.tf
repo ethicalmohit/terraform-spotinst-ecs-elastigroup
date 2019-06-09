@@ -13,7 +13,7 @@ resource "spotinst_elastigroup_aws" "ecs-elastigroup" {
 
   max_size         = 2
   min_size         = 0
-  desired_capacity = 2
+  desired_capacity = 1
   capacity_unit    = "instance"
 
   region   = "${var.region}"
