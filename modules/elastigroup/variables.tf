@@ -17,11 +17,11 @@ variable "instance_types_ondemand" {
 }
 
 variable "instance_types_spot" {
-  default = ["t2.micro", "t3.micro", "t3a.micro"]
+  default = ["t2.micro", "t2.small", "m4.large"]
 }
 
 variable "instance_types_preferred_spot" {
-  default = ["t2.micro"]
+  default = ["t2.small"]
 }
 
 variable "subnet_ids" {
@@ -45,7 +45,7 @@ variable "region" {
 }
 
 variable "ami_id" {
-  default = "ami-0ff8a91507f77f867"
+  default = "ami-02507631a9f7bc956"
 }
 
 variable "min_capacity" {
@@ -59,3 +59,5 @@ variable "max_capacity" {
 variable "desired_capacity" {
   default = 1
 }
+
+variable "instance_iam_role" {}
