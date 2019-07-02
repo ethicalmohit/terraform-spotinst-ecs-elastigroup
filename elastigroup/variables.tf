@@ -4,7 +4,7 @@ variable "spotinst_account" {}
 
 variable "ecs_cluster_name" {
   description = "describe your variable"
-  default     = "example"
+  default     = ""
 }
 
 variable "fallback_to_ondemand" {
@@ -25,6 +25,7 @@ variable "instance_types_preferred_spot" {
 }
 
 variable "subnet_ids" {
+  description = "List of subnet ids in which the instances will be created."
   default = ["subnet-0daefb56", "subnet-1759c972", "subnet-1196c83c", "subnet-ba8b84f3", "subnet-c470c8c8", "subnet-5921b665"]
 }
 
@@ -45,6 +46,7 @@ variable "region" {
 }
 
 variable "ami_id" {
+  description = "String of ami id of the ec2 instances for the ec2 instances."
   default = "ami-02507631a9f7bc956"
 }
 
