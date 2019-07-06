@@ -22,3 +22,20 @@ module "iam-role" {
   source = "./modules/iam"
 }
 ```
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| ecs_cluster_name | ECS cluster name | string | `testing` | yes |
+| region | Region name | string | `us-east-1` | yes |
+| min_capacity | Region name | string | 0 | yes |
+| max_capacity | Region name | string | 5 | yes |
+| desired_capacity | Region name | number | 1 | yes |
+| instance_types_ondemand | AMI ID | string | `t2.micro` | yes |
+| instance_types_preferred_spot | AMI ID | list | `t2.micro` | yes |
+| instance_types_spot | AMI ID | list | `t2.micro,t3.micro` | yes |
+| fallback_to_ondemand | If enabled, Unavailability of spot will be coved by on-demand. | string | `yes` | yes |
+| wait_for_capacity | Minimum number of instances in a 'HEALTHY' status that is required before continuing | number | `us-east-1` | yes |
+| wait_for_capacity_timeout | Time (seconds) to wait for instances to report a 'HEALTHY' status. | number | 300 | yes |
+| subnet_ids | subnet ids for the ec2 instances | List | subnet-0daefb56, subnet-1759c972 | yes
