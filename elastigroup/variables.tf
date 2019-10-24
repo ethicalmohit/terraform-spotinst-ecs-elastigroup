@@ -1,6 +1,8 @@
-variable "spotinst_token" {}
+variable "spotinst_token" {
+}
 
-variable "spotinst_account" {}
+variable "spotinst_account" {
+}
 
 variable "ecs_cluster_name" {
   description = "describe your variable"
@@ -26,7 +28,7 @@ variable "instance_types_preferred_spot" {
 
 variable "subnet_ids" {
   description = "List of subnet ids in which the instances will be created."
-  default = ["subnet-0daefb56", "subnet-1759c972"]
+  default     = ["subnet-0daefb56", "subnet-1759c972"]
 }
 
 variable "wait_for_capacity" {
@@ -47,7 +49,7 @@ variable "region" {
 
 variable "ami_id" {
   description = "String of ami id of the ec2 instances for the ec2 instances."
-  default = "ami-02507631a9f7bc956"
+  default     = "ami-02507631a9f7bc956"
 }
 
 variable "min_capacity" {
@@ -62,4 +64,6 @@ variable "desired_capacity" {
   default = 1
 }
 
-variable "instance_iam_role" {}
+variable "instance_iam_role" {
+}
+
