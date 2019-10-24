@@ -20,19 +20,21 @@ resource "aws_iam_role" "external" {
   ]
 }
 EOF
+
 }
 
 data "template_file" "external" {
-  template = "${file("${path.module}/ecs_policy.json")}"
+  template = file("${path.module}/ecs_policy.json")
 }
 
 resource "aws_iam_policy" "ecs" {
   name        = "Spotinst-Policy"
   description = "A test policy"
-  policy      = "${data.template_file.external.rendered}"
+  policy      = data.template_file.external.rendered
 }
 
 resource "aws_iam_role_policy_attachment" "ecs-attach" {
-  role       = "${aws_iam_role.external.name}"
-  policy_arn = "${aws_iam_policy.ecs.arn}"
+  role       = aws_iam_role.external.name
+  policy_arn = aws_iam_policy.ecs.arn
 }
+
